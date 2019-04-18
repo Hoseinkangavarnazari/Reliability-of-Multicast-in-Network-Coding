@@ -63,26 +63,36 @@ def beta(m, mu, N, L):
     return answer
 
 
+def finialPossibleSet(tempSet,N):
+    for i in range (len(tempSet)):
+        if tempSet[i] != N :
+            return False
+    return True
+
 def everyPossibleSet(N, L):
     result = []
     buckets = [0] * L
     temp = buckets[:]
     result.append(temp)
-    for i in range(0, L):
+    while True:
         i = 0
-        for j in range(0, N+1):
+        for j in range(0, N):
             buckets[i] += 1
             temp = buckets[:] 
             result.append(temp)
+            # is it finished
+            flag = finialPossibleSet(temp,N)
+            if flag:
+                return result
         # search for another element which is not N
-        for k in range(i, L):
-            if(buckets[k] < N):
+        for k in range(0, L):
+            if(buckets[k] < N ):
                 buckets[k] += 1
                 for ii in range(0, k):
                     buckets[ii] = 0
-                result.append(buckets)
-                break
-    return result   
+                temp = buckets[:]
+                result.append(temp)
+                break   
             
     return result
 
@@ -90,7 +100,7 @@ def everyPossibleSet(N, L):
 if __name__ == "__main__":
     test = full_rank_probability(2, 15, 10)
     print(ncr(5, 3))
-    a = everyPossibleSet(2, 4)
+    a = everyPossibleSet(5,4)
     arr = [3, 2, 1, 2, 3, 12]
     mina = min(arr)
 
