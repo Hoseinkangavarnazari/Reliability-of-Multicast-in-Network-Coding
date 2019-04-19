@@ -38,7 +38,21 @@ def i_rank_probability(q, mu, k, i):
     return answer
 
 
+def thildaProbability(m, mu, q, k):
+    answer = 0
+    for i in range(0, min(m)+1):
+        iTemp = i_rank_probability(q, mu, k, i)
+        seperateRankTemp = 1
+        for j in range(0, len(m)):
+            seperateRankTemp *= full_rank_probability(q, m[j]-mu, k - i)
+        answer += iTemp * seperateRankTemp
+    return answer
+    
+
+
 # m  an array of pocket received by each receiver, N total packet sent, e an array of error between each link
+
+
 def phi(m, N, e):
     answer = 1
     for i in range(0, len(m)):
@@ -53,7 +67,6 @@ def beta(m, mu, N, L):
         tempOuter = 1
         sign = pow(-1, l)
         comb = ncr(N-mu, l)
-
         tempInner = 1
         for j in range(L):
             tempInner *= ncr(N-mu-1, m[j]-mu-1)
@@ -99,7 +112,7 @@ def everyPossibleSet(N, L):
 
 
 if __name__ == "__main__":
-
+    FIELD_SIZE = 2
     NUMBER_OF_TOTAL_TRANSMISSION = 10
     NUMBER_OF_RECEIVERS = 4
     NUMBER_OF_SYMBOLS = 5
