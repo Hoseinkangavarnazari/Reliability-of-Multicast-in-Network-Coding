@@ -43,7 +43,7 @@ def phi(m, N, e):
     answer = 1
     for i in range(0, len(m)):
         answer *= pow((1 - e[i]), m[i]) * pow(e[i], N-m[i])
-    return
+    return answer
 
 
 def beta(m, mu, N, L):
@@ -114,9 +114,16 @@ if __name__ == "__main__":
     FINAL_ANSWER = 0
 
     for m_i in M:
-        FINAL_ANSWER += phi(m_i, NUMBER_OF_TOTAL_TRANSMISSION, errorSet)
+        tempPhi = phi(m_i, NUMBER_OF_TOTAL_TRANSMISSION, errorSet)
+        tempBeta = None
+        tempPThilda = None
+        for mu in range(0, min(M)):
 
+            tempBeta = ncr(NUMBER_OF_TOTAL_TRANSMISSION, mu) * beta(m_i,
+                                                                    mu, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
 
-# make an array field sizse
+            # FINAL_ANSWER +=
+
+            # make an array field sizse
     a = [x for x in range(10)]
     print(a[1])
