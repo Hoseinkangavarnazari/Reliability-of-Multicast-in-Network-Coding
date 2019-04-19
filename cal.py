@@ -1,6 +1,6 @@
 # Implementation of calulation of Reibility of Multicast Under random linear network coding
-# Evengy Tsimbalo & Andrea Tassi
-# coded by Hosein Kangavar Nazari
+# wroted by Evengy Tsimbalo & Andrea Tassi
+# Coded by Hosein Kangavar Nazari (IASBS university)
 import numpy as np
 import math
 import operator as op
@@ -63,11 +63,12 @@ def beta(m, mu, N, L):
     return answer
 
 
-def finialPossibleSet(tempSet,N):
-    for i in range (len(tempSet)):
-        if tempSet[i] != N :
+def finialPossibleSet(tempSet, N):
+    for i in range(len(tempSet)):
+        if tempSet[i] != N:
             return False
     return True
+
 
 def everyPossibleSet(N, L):
     result = []
@@ -78,31 +79,43 @@ def everyPossibleSet(N, L):
         i = 0
         for j in range(0, N):
             buckets[i] += 1
-            temp = buckets[:] 
+            temp = buckets[:]
             result.append(temp)
             # is it finished
-            flag = finialPossibleSet(temp,N)
+            flag = finialPossibleSet(temp, N)
             if flag:
                 return result
         # search for another element which is not N
         for k in range(0, L):
-            if(buckets[k] < N ):
+            if(buckets[k] < N):
                 buckets[k] += 1
                 for ii in range(0, k):
                     buckets[ii] = 0
                 temp = buckets[:]
                 result.append(temp)
-                break   
-            
+                break
+
     return result
 
 
 if __name__ == "__main__":
-    test = full_rank_probability(2, 15, 10)
-    print(ncr(5, 3))
-    a = everyPossibleSet(5,4)
-    arr = [3, 2, 1, 2, 3, 12]
-    mina = min(arr)
+
+    NUMBER_OF_TOTAL_TRANSMISSION = 10
+    NUMBER_OF_RECEIVERS = 4
+    NUMBER_OF_SYMBOLS = 5
+    # we consider every link has a same amount of error rate
+    ERROR_RATE = 10
+    errorSet = [ERROR_RATE for i in range(0, NUMBER_OF_RECEIVERS)]
+
+    # every possible set of number of received codes by nodes
+    # first parameter: Number of total transmission
+    # Second parameter: Number of receiver nodes
+    M = everyPossibleSet(NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
+    FINAL_ANSWER = 0
+
+    for m_i in M:
+        FINAL_ANSWER += phi(m_i, NUMBER_OF_TOTAL_TRANSMISSION, errorSet)
+
 
 # make an array field sizse
     a = [x for x in range(10)]
