@@ -1,6 +1,7 @@
 # Implementation of calulation of Reibility of Multicast Under random linear network coding
 # wroted by Evengy Tsimbalo & Andrea Tassi
 # Coded by Hosein Kangavar Nazari (IASBS university)
+
 import numpy as np
 import math
 import operator as op
@@ -112,39 +113,43 @@ def everyPossibleSet(N, L):
 
 
 if __name__ == "__main__":
-    FIELD_SIZE = 2
-    NUMBER_OF_TOTAL_TRANSMISSION = 2
-    NUMBER_OF_RECEIVERS = 3
-    # in order to decode we have to at least send number of symbols
-    NUMBER_OF_SYMBOLS = max(NUMBER_OF_TOTAL_TRANSMISSION,3)
-    # we consider every link has a same amount of error rate
-    ERROR_RATE = 10
-    errorSet = [ERROR_RATE for i in range(0, NUMBER_OF_RECEIVERS)]
+    # ***********************************************************************************************
+    # FIELD_SIZE = 2
+    # NUMBER_OF_TOTAL_TRANSMISSION = 20
+    # NUMBER_OF_RECEIVERS = 3
+    # # in order to decode we have to at least send number of symbols
+    # NUMBER_OF_SYMBOLS = 5
 
-    FINAL_ANSWER = 0
+    # # we consider every link has a same amount of error rate
+    # ERROR_RATE = 0. 10
+    # errorSet = [ERROR_RATE for i in range(0, NUMBER_OF_RECEIVERS)]
 
-    # every possible set of number of received codes by nodes
-    # first parameter: Number of total transmission
-    # Second parameter: Number of receiver nodes
-    M = everyPossibleSet(NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
+    # FINAL_ANSWER = 0
+
+    # # every possible set of number of received codes by nodes
+    # # first parameter: Number of total transmission
+    # # Second parameter: Number of receiver nodes
+    # M = everyPossibleSet(NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
     
 
-    for m_i in M:
-        tempPhi = phi(m_i, NUMBER_OF_TOTAL_TRANSMISSION, errorSet)
-        tempBeta = None
-        tempPThilda = None
-        innerAnswer = 0 
-        for mu in range(0, min(m_i)):
-            tempPThilda = thildaProbability(m_i,mu,FIELD_SIZE,NUMBER_OF_SYMBOLS)
-            tempBeta = ncr(NUMBER_OF_TOTAL_TRANSMISSION, mu) * beta(m_i,
-                                                                    mu, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
-            innerAnswer += tempPThilda * tempBeta
+    # for m_i in M:
+    #     tempPhi = phi(m_i, NUMBER_OF_TOTAL_TRANSMISSION, errorSet)
+    #     tempBeta = None
+    #     tempPThilda = None
+    #     innerAnswer = 0 
+    #     for mu in range(0, min(m_i)):
+    #         tempPThilda = thildaProbability(m_i,mu,FIELD_SIZE,NUMBER_OF_SYMBOLS)
+    #         tempBeta = ncr(NUMBER_OF_TOTAL_TRANSMISSION, mu) * beta(m_i,
+    #                                                                 mu, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
+    #         innerAnswer += tempPThilda * tempBeta
         
-        FINAL_ANSWER += innerAnswer * tempPhi 
+    #     FINAL_ANSWER += innerAnswer * tempPhi 
 
-            # FINAL_ANSWER +=
+    #         # FINAL_ANSWER +=
 
-            # make an array field sizse
-    # a = [x for x in range(10)]
-    # print(a[1])
-    print (FINAL_ANSWER)
+    #         # make an array field sizse
+    # # a = [x for x in range(10)]
+    # # print(a[1])
+    # print (FINAL_ANSWER)
+    # ***********************************************************************************************
+    print(ncr(10,1))
