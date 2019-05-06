@@ -25,9 +25,6 @@ def full_rank_probability(q, m, k):
         answer *= 1 - pow(q, i-m)
     return answer
 
-# The probability of having rank i by Mu,k matrix
-# for mutual packets
-
 
 def i_rank_probability(q, mu, k, i):
     preEquation = 1 / pow(q, (mu - i)*(k-i))
@@ -43,13 +40,20 @@ def i_rank_probability(q, mu, k, i):
 
 def thildaProbability(m, mu, q, k):
     answer = 0
-    lowerBoundI= k - min(m) + mu
-    upperBoundI = min(mu,k) + 1
+    # at least this much we need to make full rank  i rank from mutual and other from other parts
+    # The probability of having rank i by Mu,k matrix
+    # for mutual packets if at last we can provide mj - mu from other side?
+    # so we need to pick the minimum value of m because it shows how much we can provide for all nodes at last
+    # min(m)-mu : thats the maximum which we can guarantee we can achive
+
+    lowerBoundI = k - min(m) + mu
+    upperBoundI = min(mu, k) + 1
 
     # for i in range(0, min(m)+1):
-    for i in range(lowerBoundI,upperBoundI):
+    for i in range(lowerBoundI, upperBoundI):
         iTemp = i_rank_probability(q, mu, k, i)
         seperateRankTemp = 1
+        # For each recipient
         for j in range(0, len(m)):
             seperateRankTemp *= full_rank_probability(q, m[j]-mu, k - i)
         answer += iTemp * seperateRankTemp
@@ -160,4 +164,5 @@ if __name__ == "__main__":
     # print(phi([3,4,6],10,[0.3 for i in range(3)]));
     # print(ncr(10,1))
     # print(i_rank_probability(3, 4, 6, 2))
-    print(full_rank_probability(2,3,2));
+    # print(full_rank_probability(2, 3, 2))
+    print(thildaProbability([3,4,5],3,3,2))
