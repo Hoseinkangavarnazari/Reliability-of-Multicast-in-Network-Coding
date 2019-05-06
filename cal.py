@@ -17,6 +17,7 @@ def ncr(n, r):
 
 # q denotes Finite field size , m received packet in decoding matrix, K is number of symbols to decode
 def full_rank_probability(q, m, k):
+    # because at least we want K rank but is it ok to zero it like this?
     if m < k:
         return 0
     answer = 1
@@ -31,6 +32,7 @@ def full_rank_probability(q, m, k):
 def i_rank_probability(q, mu, k, i):
     preEquation = 1 / pow(q, (mu - i)*(k-i))
     answer = preEquation
+    # l must be in range of zero to i-1
     for l in range(i):
         numeratorLeft = 1 - pow(q, l - mu)
         numeratorRight = 1 - pow(q, l - k)
@@ -41,14 +43,17 @@ def i_rank_probability(q, mu, k, i):
 
 def thildaProbability(m, mu, q, k):
     answer = 0
-    for i in range(0, min(m)+1):
+    lowerBoundI= k - min(m) + mu
+    upperBoundI = min(mu,k) + 1
+
+    # for i in range(0, min(m)+1):
+    for i in range(lowerBoundI,upperBoundI):
         iTemp = i_rank_probability(q, mu, k, i)
         seperateRankTemp = 1
         for j in range(0, len(m)):
             seperateRankTemp *= full_rank_probability(q, m[j]-mu, k - i)
         answer += iTemp * seperateRankTemp
     return answer
-    
 
 
 # m  an array of pocket received by each receiver, N total packet sent, e an array of error between each link
@@ -56,6 +61,7 @@ def thildaProbability(m, mu, q, k):
 
 def phi(m, N, e):
     answer = 1
+    # in paper i starts from 1,although we've started our array from zero
     for i in range(0, len(m)):
         answer *= pow((1 - e[i]), m[i]) * pow(e[i], N-m[i])
     return answer
@@ -130,20 +136,19 @@ if __name__ == "__main__":
     # # first parameter: Number of total transmission
     # # Second parameter: Number of receiver nodes
     # M = everyPossibleSet(NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
-    
 
     # for m_i in M:
     #     tempPhi = phi(m_i, NUMBER_OF_TOTAL_TRANSMISSION, errorSet)
     #     tempBeta = None
     #     tempPThilda = None
-    #     innerAnswer = 0 
+    #     innerAnswer = 0
     #     for mu in range(0, min(m_i)):
     #         tempPThilda = thildaProbability(m_i,mu,FIELD_SIZE,NUMBER_OF_SYMBOLS)
     #         tempBeta = ncr(NUMBER_OF_TOTAL_TRANSMISSION, mu) * beta(m_i,
     #                                                                 mu, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
     #         innerAnswer += tempPThilda * tempBeta
-        
-    #     FINAL_ANSWER += innerAnswer * tempPhi 
+
+    #     FINAL_ANSWER += innerAnswer * tempPhi
 
     #         # FINAL_ANSWER +=
 
@@ -152,5 +157,7 @@ if __name__ == "__main__":
     # # print(a[1])
     # print (FINAL_ANSWER)
     # ***********************************************************************************************
-    print(phi([3,4,6],10,[0.3 for i in range(3)]));
+    # print(phi([3,4,6],10,[0.3 for i in range(3)]));
     # print(ncr(10,1))
+    # print(i_rank_probability(3, 4, 6, 2))
+    print(full_rank_probability(2,3,2));
