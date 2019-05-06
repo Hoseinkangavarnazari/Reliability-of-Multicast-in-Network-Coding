@@ -79,8 +79,8 @@ def beta(m, mu, N, L):
         sign = pow(-1, l)
         comb = ncr(N-mu, l)
         tempInner = 1
-        for j in range(L):
-            tempInner *= ncr(N-mu-1, m[j]-mu-1)
+        for j in range(0,L):
+            tempInner *= ncr(N-mu-l, m[j]-mu-l)
         tempOuter = sign * comb * tempInner
         answer += tempOuter
 
