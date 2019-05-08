@@ -124,35 +124,36 @@ def everyPossibleSet(N, L):
 
 if __name__ == "__main__":
     # ***********************************************************************************************
-    # FIELD_SIZE = 2
-    # NUMBER_OF_TOTAL_TRANSMISSION = 20
-    # NUMBER_OF_RECEIVERS = 3
+    FIELD_SIZE = 2
+    NUMBER_OF_TOTAL_TRANSMISSION = 7
+    NUMBER_OF_RECEIVERS = 6
     # # in order to decode we have to at least send number of symbols
-    # NUMBER_OF_SYMBOLS = 5
+    NUMBER_OF_SYMBOLS = 5
 
     # # we consider every link has a same amount of error rate
-    # ERROR_RATE = 0. 10
-    # errorSet = [ERROR_RATE for i in range(0, NUMBER_OF_RECEIVERS)]
+    ERROR_RATE = 0.01
+    errorSet = [ERROR_RATE for i in range(0, NUMBER_OF_RECEIVERS)]
 
-    # FINAL_ANSWER = 0
+    FINAL_ANSWER = 0
 
     # # every possible set of number of received codes by nodes
     # # first parameter: Number of total transmission
     # # Second parameter: Number of receiver nodes
-    # M = everyPossibleSet(NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
+    M = everyPossibleSet(NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
 
-    # for m_i in M:
-    #     tempPhi = phi(m_i, NUMBER_OF_TOTAL_TRANSMISSION, errorSet)
-    #     tempBeta = None
-    #     tempPThilda = None
-    #     innerAnswer = 0
-    #     for mu in range(0, min(m_i)):
-    #         tempPThilda = thildaProbability(m_i,mu,FIELD_SIZE,NUMBER_OF_SYMBOLS)
-    #         tempBeta = ncr(NUMBER_OF_TOTAL_TRANSMISSION, mu) * beta(m_i,
-    #                                                                 mu, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
-    #         innerAnswer += tempPThilda * tempBeta
+    for m_i in M:
+        tempPhi = phi(m_i, NUMBER_OF_TOTAL_TRANSMISSION, errorSet)
+        tempBeta = None
+        tempPThilda = None
+        innerAnswer = 0
+    # check if it should be started at zero or not
+        for mu in range(0, min(m_i)):
+            tempPThilda = thildaProbability(m_i,mu,FIELD_SIZE,NUMBER_OF_SYMBOLS)
+            tempBeta = ncr(NUMBER_OF_TOTAL_TRANSMISSION, mu) * beta(m_i,
+                                                                    mu, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
+            innerAnswer += tempPThilda * tempBeta
 
-    #     FINAL_ANSWER += innerAnswer * tempPhi
+        FINAL_ANSWER += innerAnswer * tempPhi
 
     #         # FINAL_ANSWER +=
 
@@ -165,4 +166,6 @@ if __name__ == "__main__":
     # print(ncr(10,1))
     # print(i_rank_probability(3, 4, 6, 2))
     # print(full_rank_probability(2, 3, 2))
-    print(thildaProbability([3,4,5],3,3,2))
+    # print(thildaProbability([3,4,5],3,3,2))
+
+    print("The final answer is" , FINAL_ANSWER)
