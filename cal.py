@@ -126,7 +126,7 @@ if __name__ == "__main__":
     # ***********************************************************************************************
     FIELD_SIZE = 2
     NUMBER_OF_TOTAL_TRANSMISSION = 7
-    NUMBER_OF_RECEIVERS = 6
+    NUMBER_OF_RECEIVERS = 15
     # # in order to decode we have to at least send number of symbols
     NUMBER_OF_SYMBOLS = 5
 
@@ -140,17 +140,18 @@ if __name__ == "__main__":
     # # first parameter: Number of total transmission
     # # Second parameter: Number of receiver nodes
     M = everyPossibleSet(NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
-
+    # just for test
+    # M = [[5,5]]
     for m_i in M:
         tempPhi = phi(m_i, NUMBER_OF_TOTAL_TRANSMISSION, errorSet)
         tempBeta = None
         tempPThilda = None
         innerAnswer = 0
     # check if it should be started at zero or not
-        for mu in range(0, min(m_i)):
+        for mu in range(0, min(m_i)+1):
             tempPThilda = thildaProbability(m_i,mu,FIELD_SIZE,NUMBER_OF_SYMBOLS)
             tempBeta = ncr(NUMBER_OF_TOTAL_TRANSMISSION, mu) * beta(m_i,
-                                                                    mu, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
+                                                                    mu , NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
             innerAnswer += tempPThilda * tempBeta
 
         FINAL_ANSWER += innerAnswer * tempPhi
