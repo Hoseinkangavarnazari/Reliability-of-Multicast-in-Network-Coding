@@ -79,7 +79,7 @@ def beta(m, mu, N, L):
         sign = pow(-1, l)
         comb = ncr(N-mu, l)
         tempInner = 1
-        for j in range(0,L):
+        for j in range(0, L):
             tempInner *= ncr(N-mu-l, m[j]-mu-l)
         tempOuter = sign * comb * tempInner
         answer += tempOuter
@@ -125,13 +125,13 @@ def everyPossibleSet(N, L):
 if __name__ == "__main__":
     # ***********************************************************************************************
     FIELD_SIZE = 2
-    NUMBER_OF_TOTAL_TRANSMISSION = 7
-    NUMBER_OF_RECEIVERS = 15
+    NUMBER_OF_TOTAL_TRANSMISSION = 11
+    NUMBER_OF_RECEIVERS = 6
     # # in order to decode we have to at least send number of symbols
     NUMBER_OF_SYMBOLS = 5
 
     # # we consider every link has a same amount of error rate
-    ERROR_RATE = 0.01
+    ERROR_RATE = 0.1
     errorSet = [ERROR_RATE for i in range(0, NUMBER_OF_RECEIVERS)]
 
     FINAL_ANSWER = 0
@@ -149,9 +149,10 @@ if __name__ == "__main__":
         innerAnswer = 0
     # check if it should be started at zero or not
         for mu in range(0, min(m_i)+1):
-            tempPThilda = thildaProbability(m_i,mu,FIELD_SIZE,NUMBER_OF_SYMBOLS)
+            tempPThilda = thildaProbability(
+                m_i, mu, FIELD_SIZE, NUMBER_OF_SYMBOLS)
             tempBeta = ncr(NUMBER_OF_TOTAL_TRANSMISSION, mu) * beta(m_i,
-                                                                    mu , NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
+                                                                    mu, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
             innerAnswer += tempPThilda * tempBeta
 
         FINAL_ANSWER += innerAnswer * tempPhi
@@ -169,4 +170,31 @@ if __name__ == "__main__":
     # print(full_rank_probability(2, 3, 2))
     # print(thildaProbability([3,4,5],3,3,2))
 
-    print("The final answer is" , FINAL_ANSWER)
+    print("The final answer is", FINAL_ANSWER)
+
+    # FIELD_SIZE = 2
+    # NUMBER_OF_TOTAL_TRANSMISSION = 7
+    # NUMBER_OF_RECEIVERS = 15
+    # # # in order to decode we have to at least send number of symbols
+    # NUMBER_OF_SYMBOLS = 5
+
+    # # # we consider every link has a same amount of error rate
+    # ERROR_RATE = 0.01
+    # errorSet = [ERROR_RATE for i in range(0, NUMBER_OF_RECEIVERS)]
+
+    def PLEcalculator(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS, NUMBER_OF_SYMBOLS, ERROR_RATE, CURRENT_STATE_OF_RECEIVERS):
+        errorSet = [ERROR_RATE for i in range(0, NUMBER_OF_RECEIVERS)]
+        m_i = CURRENT_STATE_OF_RECEIVERS
+
+        tempPhi = phi(m_i, NUMBER_OF_TOTAL_TRANSMISSION, errorSet)
+        tempBeta = None
+        tempPThilda = None
+        innerAnswer = 0
+        # check if it should be started at zero or not
+        for mu in range(0, min(m_i)+1):
+            tempPThilda = thildaProbability(m_i, mu, FIELD_SIZE, NUMBER_OF_SYMBOLS)
+            tempBeta = ncr(NUMBER_OF_TOTAL_TRANSMISSION, mu) * beta(m_i,
+                                                                        mu, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
+            innerAnswer += tempPThilda * tempBeta
+
+        return innerAnswer * tempPhi
