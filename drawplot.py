@@ -10,3 +10,8 @@ data = np.array([
 x, y = data.T
 plt.plot(x, y, 'ro-')
 plt . show()
+
+
+
+def makePlot():
+    return True

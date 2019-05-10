@@ -122,6 +122,25 @@ def everyPossibleSet(N, L):
     return result
 
 
+def PLEcalculator(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS, NUMBER_OF_SYMBOLS, ERROR_RATE, CURRENT_STATE_OF_RECEIVERS):
+    errorSet = [ERROR_RATE for i in range(0, NUMBER_OF_RECEIVERS)]
+    m_i = CURRENT_STATE_OF_RECEIVERS
+
+    tempPhi = phi(m_i, NUMBER_OF_TOTAL_TRANSMISSION, errorSet)
+    tempBeta = None
+    tempPThilda = None
+    innerAnswer = 0
+    # check if it should be started at zero or not
+    for mu in range(0, min(m_i)+1):
+        tempPThilda = thildaProbability(m_i, mu, FIELD_SIZE, NUMBER_OF_SYMBOLS)
+        tempBeta = ncr(NUMBER_OF_TOTAL_TRANSMISSION, mu) * beta(m_i,
+                                                                    mu, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
+        innerAnswer += tempPThilda * tempBeta
+
+    return innerAnswer * tempPhi
+
+
+
 if __name__ == "__main__":
     # ***********************************************************************************************
     FIELD_SIZE = 2
@@ -182,19 +201,4 @@ if __name__ == "__main__":
     # ERROR_RATE = 0.01
     # errorSet = [ERROR_RATE for i in range(0, NUMBER_OF_RECEIVERS)]
 
-    def PLEcalculator(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS, NUMBER_OF_SYMBOLS, ERROR_RATE, CURRENT_STATE_OF_RECEIVERS):
-        errorSet = [ERROR_RATE for i in range(0, NUMBER_OF_RECEIVERS)]
-        m_i = CURRENT_STATE_OF_RECEIVERS
-
-        tempPhi = phi(m_i, NUMBER_OF_TOTAL_TRANSMISSION, errorSet)
-        tempBeta = None
-        tempPThilda = None
-        innerAnswer = 0
-        # check if it should be started at zero or not
-        for mu in range(0, min(m_i)+1):
-            tempPThilda = thildaProbability(m_i, mu, FIELD_SIZE, NUMBER_OF_SYMBOLS)
-            tempBeta = ncr(NUMBER_OF_TOTAL_TRANSMISSION, mu) * beta(m_i,
-                                                                        mu, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
-            innerAnswer += tempPThilda * tempBeta
-
-        return innerAnswer * tempPhi
+    
