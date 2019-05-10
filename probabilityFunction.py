@@ -12,30 +12,38 @@ if __name__ == "__main__":
     initialstate = [NUMBER_OF_SYMBOLS for i in range(0, NUMBER_OF_RECEIVERS)]
     CURRENT_STATE_OF_RECEIVERS = initialstate
 
-    for NUMBER_OF_TOTAL_TRANSMISSION in range (NUMBER_OF_SYMBOLS,15):
 
-        currentState = initialstate
-        tempAnswer = 0
-        while(currentState != False):
+    while(NUMBER_OF_RECEIVERS < 30):
+        filename = "Receivers"+str(NUMBER_OF_RECEIVERS)+"errorRate"+str(ERROR_RATE)+".txt"
+        f = open(filename, "w+")
 
-            if(validateSet(NUMBER_OF_SYMBOLS, currentState)):
-                # print(temp)
-                # run Thatapp
-                VALID_CURRENT_STATE_OF_RECEIVERS = currentState
+        for NUMBER_OF_TOTAL_TRANSMISSION in range(NUMBER_OF_SYMBOLS, 15+1):
 
-                # add the answer
-                tempAnswer += PLEcalculator(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS,
-                                            NUMBER_OF_SYMBOLS, ERROR_RATE, VALID_CURRENT_STATE_OF_RECEIVERS)
+            currentState = initialstate
+            tempAnswer = 0
+            while(currentState != False):
 
-                currentState = nextPossibleSet(
-                    NUMBER_OF_TOTAL_TRANSMISSION, currentState)
-            else:
-                # print(temp)
-                currentState = nextPossibleSet(
-                    NUMBER_OF_TOTAL_TRANSMISSION, currentState)
+                if(validateSet(NUMBER_OF_SYMBOLS, currentState)):
+                    # print(temp)
+                    # run Thatapp
+                    VALID_CURRENT_STATE_OF_RECEIVERS = currentState
 
-        print(tempAnswer)
+                    # add the answer
+                    tempAnswer += PLEcalculator(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS,
+                                                NUMBER_OF_SYMBOLS, ERROR_RATE, VALID_CURRENT_STATE_OF_RECEIVERS)
 
+                    currentState = nextPossibleSet(
+                        NUMBER_OF_TOTAL_TRANSMISSION, currentState)
+                else:
+                    # print(temp)
+                    currentState = nextPossibleSet(
+                        NUMBER_OF_TOTAL_TRANSMISSION, currentState)
+
+            print(tempAnswer)
+            f.write("[" + str(NUMBER_OF_TOTAL_TRANSMISSION) +
+                    ","+str(tempAnswer) + "]" + "\n")
+        f.close()
+        NUMBER_OF_RECEIVERS +=10
     # we want to calculate it for
     # for each NUMBER_OF_TOTAL_TRANSMISSION [5:15] make a point and push it in to the array
     # push it into the array
