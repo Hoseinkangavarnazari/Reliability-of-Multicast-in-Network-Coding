@@ -144,13 +144,13 @@ def PLEcalculator(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS,
 if __name__ == "__main__":
     # ***********************************************************************************************
     FIELD_SIZE = 2
-    NUMBER_OF_TOTAL_TRANSMISSION = 11
-    NUMBER_OF_RECEIVERS = 6
+    NUMBER_OF_TOTAL_TRANSMISSION = 15
+    NUMBER_OF_RECEIVERS = 2
     # # in order to decode we have to at least send number of symbols
     NUMBER_OF_SYMBOLS = 5
 
     # # we consider every link has a same amount of error rate
-    ERROR_RATE = 0.1
+    ERROR_RATE = 0.01
     errorSet = [ERROR_RATE for i in range(0, NUMBER_OF_RECEIVERS)]
 
     FINAL_ANSWER = 0

@@ -9,8 +9,9 @@ if __name__ == "__main__":
     NUMBER_OF_RECEIVERS = 10
     NUMBER_OF_SYMBOLS = 5
     ERROR_RATE = 0.01
-    initialstate = [NUMBER_OF_SYMBOLS for i in range(0, NUMBER_OF_RECEIVERS)]
-    CURRENT_STATE_OF_RECEIVERS = initialstate
+    # INITIALSTATE = [NUMBER_OF_SYMBOLS for i in range(0, NUMBER_OF_RECEIVERS)]
+    INITIALSTATE = [5,5]
+    CURRENT_STATE_OF_RECEIVERS = INITIALSTATE 
 
 
     while(NUMBER_OF_RECEIVERS < 30):
@@ -19,7 +20,8 @@ if __name__ == "__main__":
 
         for NUMBER_OF_TOTAL_TRANSMISSION in range(NUMBER_OF_SYMBOLS, 15+1):
 
-            currentState = initialstate
+            currentState = [NUMBER_OF_SYMBOLS for i in range(0, NUMBER_OF_RECEIVERS)]
+            print(currentState)
             tempAnswer = 0
             while(currentState != False):
 
@@ -33,11 +35,13 @@ if __name__ == "__main__":
                                                 NUMBER_OF_SYMBOLS, ERROR_RATE, VALID_CURRENT_STATE_OF_RECEIVERS)
 
                     currentState = nextPossibleSet(
+                    # print(currentState)
                         NUMBER_OF_TOTAL_TRANSMISSION, currentState)
                 else:
                     # print(temp)
                     currentState = nextPossibleSet(
                         NUMBER_OF_TOTAL_TRANSMISSION, currentState)
+
 
             print(tempAnswer)
             f.write("[" + str(NUMBER_OF_TOTAL_TRANSMISSION) +
