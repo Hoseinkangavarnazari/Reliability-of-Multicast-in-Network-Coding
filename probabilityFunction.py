@@ -46,7 +46,7 @@ if __name__ == "__main__":
             print(tempAnswer)
             f.write("[" + str(NUMBER_OF_TOTAL_TRANSMISSION) +
                     ","+str(tempAnswer) + "]" + "\n")
-        f.close()
+        f.close() 
         NUMBER_OF_RECEIVERS +=10
     # we want to calculate it for
     # for each NUMBER_OF_TOTAL_TRANSMISSION [5:15] make a point and push it in to the array
