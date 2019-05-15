@@ -6,15 +6,15 @@ if __name__ == "__main__":
     # configuration
     FIELD_SIZE = 2
     # NUMBER_OF_TOTAL_TRANSMISSION = 6
-    NUMBER_OF_RECEIVERS = 10
+    NUMBER_OF_RECEIVERS =6
     NUMBER_OF_SYMBOLS = 5
-    ERROR_RATE = 0.01
-    # INITIALSTATE = [NUMBER_OF_SYMBOLS for i in range(0, NUMBER_OF_RECEIVERS)]
-    INITIALSTATE = [5,5]
+    ERROR_RATE = 0.1
+    INITIALSTATE = [NUMBER_OF_SYMBOLS for i in range(0, NUMBER_OF_RECEIVERS)]
+
     CURRENT_STATE_OF_RECEIVERS = INITIALSTATE 
 
-
-    while(NUMBER_OF_RECEIVERS < 30):
+    # ''' I have changed the while condition for specific calculation change it for forward calculations '''
+    while(NUMBER_OF_RECEIVERS == 6):
         filename = "Receivers"+str(NUMBER_OF_RECEIVERS)+"errorRate"+str(ERROR_RATE)+".txt"
         f = open(filename, "w+")
 

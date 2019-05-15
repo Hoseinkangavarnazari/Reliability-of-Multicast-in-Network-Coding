@@ -132,6 +132,7 @@ def PLEcalculator(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS,
     innerAnswer = 0
     # check if it should be started at zero or not
     for mu in range(0, min(m_i)+1):
+        # you can write a progress bar for this in python
         tempPThilda = thildaProbability(m_i, mu, FIELD_SIZE, NUMBER_OF_SYMBOLS)
         tempBeta = ncr(NUMBER_OF_TOTAL_TRANSMISSION, mu) * beta(m_i,
                                                                     mu, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS)
