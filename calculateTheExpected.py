@@ -19,7 +19,7 @@ for i in range(0, len(lines)):
 # Calculate the expected
 expectedTransmission = statistics[0][0]*statistics[0][1]
 
-for i in range(2, len(statistics)):
+for i in range(1, len(statistics)):
     expectedTransmission += statistics[i][0] * \
         (statistics[i][1]-statistics[i-1][1])
 # x p(x) / x (p(x) - p(x-1)
