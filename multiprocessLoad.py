@@ -7,24 +7,28 @@ from generateNext import nextPossibleSet, validateSet
 
 
 def calculationSegment(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS,
-                                                NUMBER_OF_SYMBOLS, ERROR_RATE, VALID_CURRENT_STATE_OF_RECEIVERS):
+                       NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER):
 
-    filename = "/multiProcessorResult/Receivers_" + \
-        str(NUMBER_OF_RECEIVERS)+"_errorRate_"+str(ERROR_RATE)+".txt"
+    filename = ".\multiProcessorResult\Receivers_" + \
+        str(NUMBER_OF_RECEIVERS)+"_errorRate_"+str(ERROR_RATE)+"_processNumber_"+str(PROCESS_NUMBER)+".txt"
     f = open(filename, "w+")
     # NoTT iterates between elements of the Number of total transmission for example [7,9]
     for NoTT in NUMBER_OF_TOTAL_TRANSMISSION:
 
-        tempAnswer=coreCalculation(FIELD_SIZE, NoTT, NUMBER_OF_RECEIVERS,
-                                                NUMBER_OF_SYMBOLS, ERROR_RATE, VALID_CURRENT_STATE_OF_RECEIVERS)
-        print(tempAnswer)
-        f.write("[" + str(NUMBER_OF_TOTAL_TRANSMISSION) +
+        tempAnswer = coreCalculation(FIELD_SIZE, NoTT, NUMBER_OF_RECEIVERS,
+                                     NUMBER_OF_SYMBOLS, ERROR_RATE)
+        print("Process ",PROCESS_NUMBER,"Finished NoTT",NoTT," Output:",tempAnswer)
+        f.write("[" + str(NoTT) +
                 ","+str(tempAnswer) + "]" + "\n")
-    f.close() 
+    f.close()
+
+    print("Process ",PROCESS_NUMBER,"Finished the job.")
+
     return
-    
+
+
 def coreCalculation(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS,
-                                                NUMBER_OF_SYMBOLS, ERROR_RATE, VALID_CURRENT_STATE_OF_RECEIVERS):
+                    NUMBER_OF_SYMBOLS, ERROR_RATE):
 
     currentState = [NUMBER_OF_SYMBOLS for i in range(0, NUMBER_OF_RECEIVERS)]
     tempAnswer = 0
@@ -40,7 +44,7 @@ def coreCalculation(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVER
                                         NUMBER_OF_SYMBOLS, ERROR_RATE, VALID_CURRENT_STATE_OF_RECEIVERS)
 
             currentState = nextPossibleSet(
-            # print(currentState)
+                # print(currentState)
                 NUMBER_OF_TOTAL_TRANSMISSION, currentState)
         else:
             # print(temp)
@@ -56,7 +60,8 @@ def print_square(num):
     #     a = b
     #     a = 0
     print(num)
-    pb = ProgressBar(total=100,prefix='Here', suffix='Now', decimals=3, length=50, fill='X', zfill='-')
+    pb = ProgressBar(total=100, prefix='Here', suffix='Now',
+                     decimals=3, length=50, fill='X', zfill='-')
     pb.print_progress_bar(2)
     time.sleep(1)
     pb.print_progress_bar(25)
@@ -69,11 +74,24 @@ def print_square(num):
 
 
 if __name__ == "__main__":
+    # configuration
+    FIELD_SIZE = 2
+    # NUMBER_OF_TOTAL_TRANSMISSION_SET = [[5,11,12], [6,9,15], [7,10,14], [8,13]]
+    NUMBER_OF_TOTAL_TRANSMISSION_SET = [[5,11,12], [6,10,14], [7,9,13], [8,15]]
+    NUMBER_OF_RECEIVERS = 6
+    NUMBER_OF_SYMBOLS = 5
+    ERROR_RATE = 0.1
+    PROCESS_NUMBER = [1,2,3,4]
+
     # creating processes
-    p1 = multiprocessing.Process(target=print_square, args=(11, ))
-    p2 = multiprocessing.Process(target=print_square, args=(12, ))
-    p3 = multiprocessing.Process(target=print_square, args=(13, ))
-    p4 = multiprocessing.Process(target=print_square, args=(14, ))
+    p1 = multiprocessing.Process(target=calculationSegment, args=(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION_SET[0], NUMBER_OF_RECEIVERS,
+                                                            NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER[0],))
+    p2 = multiprocessing.Process(target=calculationSegment, args=(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION_SET[1], NUMBER_OF_RECEIVERS,
+                                                            NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER[1],))
+    p3 = multiprocessing.Process(target=calculationSegment, args=(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION_SET[2], NUMBER_OF_RECEIVERS,
+                                                            NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER[2],))
+    p4 = multiprocessing.Process(target=calculationSegment, args=(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION_SET[3], NUMBER_OF_RECEIVERS,
+                                                            NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER[3],))
 
     # starting process 1
     p1.start()
