@@ -1,28 +1,34 @@
 # importing the multiprocessing module
+import logging
 import multiprocessing
 import time
 from console_progressbar import ProgressBar
 from cal import PLEcalculator
 from generateNext import nextPossibleSet, validateSet
 
+logging.basicConfig(filename="./log.out", level=logging.DEBUG)
+logger = logging.getLogger()
+
 
 def calculationSegment(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS,
                        NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER):
 
     filename = ".\multiProcessorResult\Receivers_" + \
-        str(NUMBER_OF_RECEIVERS)+"_errorRate_"+str(ERROR_RATE)+"_processNumber_"+str(PROCESS_NUMBER)+".txt"
+        str(NUMBER_OF_RECEIVERS)+"_errorRate_"+str(ERROR_RATE) + \
+        "_processNumber_"+str(PROCESS_NUMBER)+".txt"
     f = open(filename, "w+")
     # NoTT iterates between elements of the Number of total transmission for example [7,9]
     for NoTT in NUMBER_OF_TOTAL_TRANSMISSION:
 
         tempAnswer = coreCalculation(FIELD_SIZE, NoTT, NUMBER_OF_RECEIVERS,
                                      NUMBER_OF_SYMBOLS, ERROR_RATE)
-        print("Process ",PROCESS_NUMBER,"Finished NoTT",NoTT," Output:",tempAnswer)
+        print("Process ", PROCESS_NUMBER, "Finished NoTT",
+              NoTT, " Output:", tempAnswer)
         f.write("[" + str(NoTT) +
                 ","+str(tempAnswer) + "]" + "\n")
     f.close()
 
-    print("Process ",PROCESS_NUMBER,"Finished the job.")
+    print("Process ", PROCESS_NUMBER, "Finished the job.")
 
     return
 
@@ -77,30 +83,38 @@ if __name__ == "__main__":
     # configuration
     FIELD_SIZE = 2
     # NUMBER_OF_TOTAL_TRANSMISSION_SET = [[5,11,12], [6,9,15], [7,10,14], [8,13]]
-    NUMBER_OF_TOTAL_TRANSMISSION_SET = [[5,11,12], [6,10,14], [7,9,13], [8,15]]
+    NUMBER_OF_TOTAL_TRANSMISSION_SET = [
+        [5, 11, 12], [6, 10, 14], [7, 9, 13], [8, 15]]
     NUMBER_OF_RECEIVERS = 6
     NUMBER_OF_SYMBOLS = 5
     ERROR_RATE = 0.1
-    PROCESS_NUMBER = [1,2,3,4]
+    PROCESS_NUMBER = [1, 2, 3, 4]
 
+    processStrings = "Process {} started"
     # creating processes
     p1 = multiprocessing.Process(target=calculationSegment, args=(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION_SET[0], NUMBER_OF_RECEIVERS,
-                                                            NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER[0],))
+                                                                  NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER[0],))
     p2 = multiprocessing.Process(target=calculationSegment, args=(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION_SET[1], NUMBER_OF_RECEIVERS,
-                                                            NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER[1],))
+                                                                  NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER[1],))
     p3 = multiprocessing.Process(target=calculationSegment, args=(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION_SET[2], NUMBER_OF_RECEIVERS,
-                                                            NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER[2],))
+                                                                  NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER[2],))
     p4 = multiprocessing.Process(target=calculationSegment, args=(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION_SET[3], NUMBER_OF_RECEIVERS,
-                                                            NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER[3],))
+                                                                  NUMBER_OF_SYMBOLS, ERROR_RATE, PROCESS_NUMBER[3],))
 
     # starting process 1
+    logger.info(processStrings.format(1))
     p1.start()
     # starting process 2
+
+    logger.info(processStrings.format(2))
     p2.start()
 
     # starting process 3
+    logger.info(processStrings.format(3))
     p3.start()
+
     # starting process 4
+    logger.info(processStrings.format(4))
     p4.start()
 
     # wait until process 1 is finished
