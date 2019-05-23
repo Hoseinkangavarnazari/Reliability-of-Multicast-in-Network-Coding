@@ -2,3 +2,15 @@ INFO:root:Process 1 started
 INFO:root:Process 2 started
 INFO:root:Process 3 started
 INFO:root:Process 4 started
+INFO 2019-05-22 14:11:49,558 - Process 1 started
+INFO 2019-05-22 14:11:49,567 - Process 2 started
+INFO 2019-05-22 14:11:49,570 - Process 3 started
+INFO 2019-05-22 14:11:49,573 - Process 4 started
+INFO 2019-05-22 18:22:37,533 - Process 1 started
+INFO 2019-05-22 18:22:37,543 - Process 2 started
+INFO 2019-05-22 18:22:37,547 - Process 3 started
+INFO 2019-05-22 18:22:37,550 - Process 4 started
+INFO 2019-05-22 19:02:26,470 - Process 1 started
+INFO 2019-05-22 19:02:26,479 - Process 2 started
+INFO 2019-05-22 19:02:26,482 - Process 3 started
+INFO 2019-05-22 19:02:26,486 - Process 4 started

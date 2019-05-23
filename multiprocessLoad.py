@@ -6,7 +6,12 @@ from console_progressbar import ProgressBar
 from cal import PLEcalculator
 from generateNext import nextPossibleSet, validateSet
 
-logging.basicConfig(filename="./log.out", level=logging.DEBUG)
+
+''' the logger configuration steps'''
+LOG_FORMAT = "%(levelname)s %(asctime)s - %(message)s"
+
+logging.basicConfig(filename="./log.out",
+                    level=logging.DEBUG, format=LOG_FORMAT)
 logger = logging.getLogger()
 
 
@@ -35,6 +40,8 @@ def calculationSegment(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEI
 
 def coreCalculation(FIELD_SIZE, NUMBER_OF_TOTAL_TRANSMISSION, NUMBER_OF_RECEIVERS,
                     NUMBER_OF_SYMBOLS, ERROR_RATE):
+
+    ''' Making valid sets for each transmission'''
 
     currentState = [NUMBER_OF_SYMBOLS for i in range(0, NUMBER_OF_RECEIVERS)]
     tempAnswer = 0
@@ -85,7 +92,7 @@ if __name__ == "__main__":
     # NUMBER_OF_TOTAL_TRANSMISSION_SET = [[5,11,12], [6,9,15], [7,10,14], [8,13]]
     NUMBER_OF_TOTAL_TRANSMISSION_SET = [
         [5, 11, 12], [6, 10, 14], [7, 9, 13], [8, 15]]
-    NUMBER_OF_RECEIVERS = 6
+    NUMBER_OF_RECEIVERS = 15
     NUMBER_OF_SYMBOLS = 5
     ERROR_RATE = 0.1
     PROCESS_NUMBER = [1, 2, 3, 4]

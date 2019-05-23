@@ -1,5 +1,3 @@
-
-
 def nextPossibleSet(totalTransmition, stateSet):
     #numberOfReceivers
     L = len(stateSet)
